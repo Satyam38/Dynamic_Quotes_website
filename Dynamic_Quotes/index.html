@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">  
+    <title>Dynamic Quotes </title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  </head>
+  <body>
+
+    <img src="22.png" alt="">
+    <div class="wrapper">
+     
+
+      <div class="content">
+        <div class="quote-area">
+          <i class="fas fa-quote-left "></i>
+          <p class="quote">I choose a lazy person to do a Hard job. Beacuse a lazy person will find an esay way to do it.</p>
+          <i class="fas fa-quote-right"></i>
+        </div>
+        <div class="author">
+          <span>__</span>
+          <span class="name">Bill Gates</span>
+        </div>
+        
+      </div>
+     <h4> Made with 🔥 Satyam</h4>
+      <div class="buttons">
+        <div class="features">
+          <ul>
+            <li class="speech"><i class="fas fa-volume-up"></i></li>
+            <li class="copy"><i class="fas fa-copy"></i></li>
+            <li class="whatsapp"><i class="fab fa-whatsapp"></i></li>
+            <li class="twitter"><i class="fab fa-twitter"></i></li>
+          </ul>
+          <button>New Quote</button>
+        </div>
+      </div>
+
+    </div>
+  </body>
+  <script>
+const quoteText = document.querySelector(".quote"),
+quoteBtn = document.querySelector("button"),
+authorName = document.querySelector(".name"),
+speechBtn = document.querySelector(".speech"),
+copyBtn = document.querySelector(".copy"),
+whatshapp = document.querySelector(".whatsapp"),
+twitter = document.querySelector(".twitter"),
+synth = speechSynthesis;
+
+function randomQuote(){
+    quoteBtn.classList.add("loading");
+    quoteBtn.innerText = "Loading Quote..";
+    fetch("http://api.quotable.io/random").then(response => response.json()).then(result => {
+        quoteText.innerText = result.content;
+        authorName.innerText = result.author;
+        quoteBtn.classList.remove("loading");
+        quoteBtn.innerText = "New Quote";
+    });
+}
+ 
+// ==========================> satyam <================================
+
+// speech speaking 
+speechBtn.addEventListener("click", ()=>{
+    if(!quoteBtn.classList.contains("loading")){
+        let utterance = new SpeechSynthesisUtterance(`${quoteText.innerText} by ${authorName.innerText}`);
+        synth.speak(utterance);
+        setInterval(()=>{
+            !synth.speaking ? speechBtn.classList.remove("active") : speechBtn.classList.add("active");
+        }, 5);
+    }
+});
+
+
+// copy text
+copyBtn.addEventListener("click", ()=>{
+    navigator.clipboard.writeText(quoteText.innerText);
+});
+
+
+//twitter
+
+twitter.addEventListener("click", ()=>{
+    let tweet = `https://twitter.com/intent/tweet?url=${quoteText.innerText}`;
+    window.open(tweet, "_blank");
+});
+
+// whatshapp 
+whatshapp.addEventListener("click", ()=>{
+    let whatshap = "https://api.whatsapp.com/send?phone=";
+    window.open(whatshap, "_blank");
+});
+
+
+
+quoteBtn.addEventListener("click", randomQuote);
+
+
+  </script>
+</html>
