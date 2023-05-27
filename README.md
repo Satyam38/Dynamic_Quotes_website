@@ -3,7 +3,7 @@
    Dynamic_Quotes_website
    <h4> ✌️A program that displays a randomly selected quote each time the user clicks a button. ... Create Dynamic Quotes using Node.js and Express.js
      <br><br>
-    live demo 👉
+    live demo 👉 https://dynamic-qoutes.netlify.app/
     <hr>
      
   </h4>
